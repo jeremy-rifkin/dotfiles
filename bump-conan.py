@@ -206,10 +206,34 @@ def main():
     ap.add_argument("--rebase-remote", default="upstream", help="remote to rebase against (default: upstream)")
     args = ap.parse_args()
 
+    # recipe_dir = pathlib.Path("recipes") / args.recipe
+    # conandata = recipe_dir / "all" / "conandata.yml"
+    # if not conandata.exists():
+    #     sys.exit(f"[error] {conandata} not found – bad recipe?")
+
     recipe_dir = pathlib.Path("recipes") / args.recipe
-    conandata = recipe_dir / "all" / "conandata.yml"
+    # ────────────────────────────────────────────────────────────────────
+    # Figure out the sub‑folder that holds the recipe files (CCI “folder”)
+    # ────────────────────────────────────────────────────────────────────
+    def detect_folder() -> str:
+        cfg = recipe_dir / "config.yml"
+        if not cfg.exists():
+            return "all"
+
+        cfg_data = load_yaml(cfg)
+        versions = cfg_data.get("versions") or {}
+        if not versions:
+            return "all"
+
+        first_key = next(iter(versions))          # keep CCI’s “most‑recent‑first” order
+        return versions[first_key].get("folder", "all")
+
+    folder: str = detect_folder()
+    conan_subdir = recipe_dir / folder
+    conandata = conan_subdir / "conandata.yml"
+
     if not conandata.exists():
-        sys.exit(f"[error] {conandata} not found – bad recipe?")
+        sys.exit(f"[error] {conandata} not found – bad recipe or wrong folder?")
 
     # Figure out tarball URL
     if args.repo_url:
@@ -241,7 +265,7 @@ def main():
 
     # Optional build
     if not args.no_build:
-        run(f"conan create {recipe_dir}/all/conanfile.py --version {args.version} --build=missing")
+        run(f"conan create {conan_subdir}/conanfile.py --version {args.version} --build=missing")
 
     # Commit & push
     commit_msg = f"{args.recipe}: Bump to {args.version}"
