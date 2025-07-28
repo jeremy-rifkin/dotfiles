@@ -140,6 +140,22 @@ def update_conandata(path_: pathlib.Path, version: str, url: str, sha256: str) -
         "sha256": sha256,
     })
     sources.insert(0, quoted_version, entry)
+
+    # ────────────────────────────────────────────────────────────────────
+    # Copy patches **only if** the *previous* version (the one that used to
+    # be first before we inserted the new version) actually has patches.
+    # ────────────────────────────────────────────────────────────────────
+    patches: CommentedMap | None = data.get("patches")
+    if patches is not None and quoted_version not in patches:
+        # Determine the version that was most‑recent before this bump.
+        src_keys = list(sources)
+        if len(src_keys) >= 2:                       # there is a prior version
+            prev_version_key = src_keys[1]           # after insertion, index 1
+            if prev_version_key in patches and patches[prev_version_key]:
+                patches.insert(
+                    0, quoted_version, copy.deepcopy(patches[prev_version_key])
+                )
+
     save_yaml(path_, data)
     print(f"[info] Added {version} to {path_.relative_to(path_.parent.parent)} (comments preserved)")
     return True
@@ -183,7 +199,14 @@ PR_TEMPLATE = textwrap.dedent(
     ### Summary
     Changes to recipe:  **{recipe}/{version}**
 
-    I'm the author, new release
+    #### Motivation
+
+    New version released upstream.
+
+    #### Details
+
+    This PR is automatically generated from a script and manually reviewed. Patches were copied from the previous
+    version if any were present and the build was tested locally.
 
     ---
     - [x] Read the [contributing guidelines](https://github.com/conan-io/conan-center-index/blob/master/CONTRIBUTING.md)
