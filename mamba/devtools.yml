@@ -1,0 +1,10 @@
+name: devtools
+channels:
+  - conda-forge
+dependencies:
+  - ripgrep
+  - fd-find
+  - fzf
+  - btop
+  - bear
+  - bat
