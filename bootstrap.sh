@@ -7,12 +7,20 @@ echo "Will install to ~/bin, ~/.jrenv, and various dotfiles"
 echo "Dotfile backups will be made to ~/.jrenv/bak"
 
 if [[ -e ~/.jrenv ]]; then
+    if [[ -d ~/.jrenv/bak ]]; then
+        tmp_bak=$(mktemp -d)
+        mv ~/.jrenv/bak "$tmp_bak/"
+    fi
     rm -rf ~/.jrenv
+    mkdir -p ~/.jrenv
+    if [[ -d "$tmp_bak/bak" ]]; then
+        mv "$tmp_bak/bak" ~/.jrenv/
+    else
+        mkdir -p ~/.jrenv/bak
+    fi
 fi
 
 mkdir -p ~/bin
-mkdir -p ~/.jrenv
-mkdir -p ~/.jrenv/bak
 mkdir -p ~/micromamba
 
 backup_dir=~/.jrenv/bak

@@ -1,6 +1,6 @@
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats ' %F{black}%b%f%k'  # bblack: black text on white background
+zstyle ':vcs_info:git:*' formats ' %F{8}%b%f%k'  # bblack: black text on white background
 
 # Enable prompt substitution
 setopt prompt_subst
@@ -21,7 +21,7 @@ SEPARATOR="›"
 PROMPT='%F{blue}%B%~%b%f$(get_git_branch) %F{green}%(?..%F{red})%B$SEPARATOR%b%f '
 
 # Right prompt: [exit status] [username] [hostname]
-RPROMPT='%(?..%K{red}%F{black} %? %f%k)%K{white} $(get_username) %f%k%K{black}%F{white} %m %f%k'
+RPROMPT='%(?..%K{red}%F{black} %? %f%k)%K{15} $(get_username) %f%k%K{8}%F{black} %m %f%k'
 
 function timetohuman {
     local T=$1
