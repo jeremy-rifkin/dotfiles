@@ -5,12 +5,15 @@ ZSH=$HOME/.jrenv/ohmyzsh
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-bindkey '^F' autosuggest-accept # ctrl+f
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.jrenv/ohmyzsh}/custom}/plugins/zsh-completions/src
+autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
 source $JRENV/zsh/theme.zsh
 source $JRENV/zsh/utils.zsh
+
+bindkey '^F' autosuggest-accept # ctrl+f
 
 # Prevents duplicate entries in PATH
 typeset -U path PATH
