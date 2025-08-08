@@ -15,13 +15,13 @@ if [[ -e ~/.jrenv ]]; then
     mkdir -p ~/.jrenv
     if [[ -d "$tmp_bak/bak" ]]; then
         mv "$tmp_bak/bak" ~/.jrenv/
-    else
-        mkdir -p ~/.jrenv/bak
     fi
 fi
 
 mkdir -p ~/bin
 mkdir -p ~/micromamba
+mkdir -p ~/.jrenv
+mkdir -p ~/.jrenv/bak
 
 backup_dir=~/.jrenv/bak
 
