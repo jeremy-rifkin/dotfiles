@@ -10,11 +10,11 @@ check_upstream_changes() {
         echo "'main' branch does not exist in $repo_path"
         return 2
     fi
-    local_count=$(git rev-list --count main..origin/main 2>/dev/null)
-    if (( local_count > 0 )); then
-        return 0  # upstream changes exist
+    count=$(git rev-list --count main..origin/main 2>/dev/null)
+    if [ "$count" -gt 0 ]; then
+        return 0
     else
-        return 1  # no changes
+        return 1
     fi
 }
 
@@ -28,7 +28,4 @@ update_env() {
 if check_upstream_changes "$dotfile_repo_dir"; then
     message=$'Upstream changes detected for $dotfile_repo_dir\nRun update_env to update!'
     cowpy -c stegosaurus "$message" || echo "=================================================\n$message\n================================================="
-else
-    echo "jr/dotfiles up to date $dotfile_repo_dir."
 fi
-
