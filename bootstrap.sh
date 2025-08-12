@@ -6,24 +6,17 @@ echo "Installing environment"
 echo "Will install to ~/bin, ~/.jrenv, and various dotfiles"
 echo "Dotfile backups will be made to ~/.jrenv/bak"
 
-if [[ -e ~/.jrenv ]]; then
-    if [[ -d ~/.jrenv/bak ]]; then
-        tmp_bak=$(mktemp -d)
-        mv ~/.jrenv/bak "$tmp_bak/"
-    fi
-    rm -rf ~/.jrenv
-    mkdir -p ~/.jrenv
-    if [[ -d "$tmp_bak/bak" ]]; then
-        mv "$tmp_bak/bak" ~/.jrenv/
-    fi
-fi
+mkdir -p ~/.jrenv
+
+# Clean up any previous stuff
+rm -rf ~/.jrenv/ohmyzsh
+rm -rf ~/.jrenv/zsh
+
+backup_dir=~/.jrenv/bak
+mkdir -p $backup_dir
 
 mkdir -p ~/bin
 mkdir -p ~/micromamba
-mkdir -p ~/.jrenv
-mkdir -p ~/.jrenv/bak
-
-backup_dir=~/.jrenv/bak
 
 bak() {
     local source_file="$1"

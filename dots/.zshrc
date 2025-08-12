@@ -25,6 +25,10 @@ path[1,0]=~/bin
 eval "$(micromamba shell hook --shell zsh)"
 
 alias mm=micromamba
+alias mm-install="micromamba install -c conda-forge"
+alias mm-install-devtool="micromamba install -n devtools -c conda-forge"
+
+$JRENV/zsh/update.zsh
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
@@ -36,6 +40,8 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 
 export PATH=$PATH:~/projects/ce/infra/bin
+
+alias pdsh="noglob pdsh"
 
 # fpath=(~/thirdparty/zsh-completions/src $fpath)
 
