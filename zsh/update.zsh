@@ -3,14 +3,17 @@
 dotfile_repo_dir=$HOME/.jrenv/dotfiles
 
 check_upstream_changes() {
+    current_dir="$PWD"
     repo_path="$1"
     cd "$repo_path" || { echo "Invalid path: $repo_path"; return 2; }
     git fetch --quiet
     if ! git show-ref --verify --quiet refs/heads/main; then
         echo "'main' branch does not exist in $repo_path"
+        cd "$current_dir"
         return 2
     fi
     count=$(git rev-list --count main..origin/main 2>/dev/null)
+    cd "$current_dir"
     if [ "$count" -gt 0 ]; then
         return 0
     else
@@ -21,7 +24,7 @@ check_upstream_changes() {
 update_env() {
     current_dir="$PWD"
     cd $dotfile_repo_dir
-    echo "Updating: Fetching and rebasing"
+    echo "Updating: Fetching and resetting"
     git fetch --prune
     git reset --hard origin/main
     ./bootstrap.sh
@@ -30,6 +33,6 @@ update_env() {
 
 if check_upstream_changes "$dotfile_repo_dir"; then
     message="Upstream changes detected for $dotfile_repo_dir
-Run update_env to update\!"
+Run update_env to update!"
     cowpy -c stegosaurus "$message" || echo "=================================================\n$message\n================================================="
 fi
