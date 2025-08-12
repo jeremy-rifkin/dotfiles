@@ -24,6 +24,8 @@ path[1,0]=~/bin
 
 eval "$(micromamba shell hook --shell zsh)"
 
+alias mm=micromamba
+
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
 SAVEHIST=10000000
