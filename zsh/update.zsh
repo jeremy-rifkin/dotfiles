@@ -19,13 +19,17 @@ check_upstream_changes() {
 }
 
 update_env() {
+    current_dir="$PWD"
     cd $dotfile_repo_dir
-    git fetch
-    git rebase origin/main
+    echo "Updating: Fetching and rebasing"
+    git fetch --prune
+    git reset --hard origin/main
     ./bootstrap.sh
+    cd "$current_dir"
 }
 
 if check_upstream_changes "$dotfile_repo_dir"; then
-    message=$'Upstream changes detected for $dotfile_repo_dir\nRun update_env to update!'
+    message="Upstream changes detected for $dotfile_repo_dir
+Run update_env to update\!"
     cowpy -c stegosaurus "$message" || echo "=================================================\n$message\n================================================="
 fi
