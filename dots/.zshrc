@@ -28,7 +28,7 @@ alias mm=micromamba
 alias mm-install="micromamba install -c conda-forge"
 alias mm-install-devtool="micromamba install -n devtools -c conda-forge"
 
-$JRENV/zsh/update.zsh
+source $JRENV/zsh/update.zsh
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
@@ -42,6 +42,8 @@ setopt SHARE_HISTORY
 export PATH=$PATH:~/projects/ce/infra/bin
 
 alias pdsh="noglob pdsh"
+
+alias sshnokey="ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no"
 
 # fpath=(~/thirdparty/zsh-completions/src $fpath)
 
@@ -70,10 +72,6 @@ alias pdsh="noglob pdsh"
 # }
 
 # alias ports="pls netstat -tupan"
-
-# alias pdsh="noglob pdsh"
-
-# alias sshnokey="ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no"
 
 # export PATH=$PATH:~/projects/ce/infra/bin
 
