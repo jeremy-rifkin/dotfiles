@@ -28,6 +28,8 @@ alias mm=micromamba
 alias mm-install="micromamba install -c conda-forge"
 alias mm-install-devtool="micromamba install -n devtools -c conda-forge"
 
+eval "$(atuin init zsh --disable-up-arrow)"
+
 source $JRENV/zsh/update.zsh
 
 HISTFILE="$HOME/.zsh_history"

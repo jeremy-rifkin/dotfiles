@@ -54,6 +54,7 @@ clone_at_commit() {
 
 for f in dots/.*; do
     [[ -e $f ]] || continue
+    [[ -d $f ]] && continue
     [[ $f == */. || $f == */.. ]] && continue
     bf=$(basename $f)
     if [[ -f "$HOME/$bf" ]]; then
@@ -61,6 +62,9 @@ for f in dots/.*; do
     fi
     cp -v $f ~
 done
+
+mkdir -p ~/.config/atuin
+cp -v dots/.config/atuin/config.toml ~/.config/atuin/config.toml
 
 cp -rv zsh ~/.jrenv
 

@@ -4,7 +4,7 @@ channels:
 dependencies:
   - ripgrep
   - fd-find
-  - fzf
+  - atuin
   - btop
   - bear
   - bat
