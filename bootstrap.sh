@@ -71,7 +71,7 @@ done
 
 cp -rv zsh ~/.jrenv
 
-cp -v scripts/* ~/bin
+cp -vp scripts/* ~/bin
 
 echo "Downloading micromamba"
 
