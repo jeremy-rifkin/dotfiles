@@ -22,7 +22,7 @@ update_env() {
     cd $dotfile_repo_dir
     git fetch
     git rebase origin/main
-    ./bootstreap.sh
+    ./bootstrap.sh
 }
 
 if check_upstream_changes "$dotfile_repo_dir"; then
