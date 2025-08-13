@@ -30,6 +30,10 @@ alias mm-install-devtool="micromamba install -n devtools -c conda-forge"
 
 eval "$(atuin init zsh --disable-up-arrow)"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
 source $JRENV/zsh/update.zsh
 
 HISTFILE="$HOME/.zsh_history"
@@ -76,10 +80,6 @@ alias sshnokey="ssh -o PasswordAuthentication=yes -o PreferredAuthentications=ke
 # alias ports="pls netstat -tupan"
 
 # export PATH=$PATH:~/projects/ce/infra/bin
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # function remote() {
 #     if [ ! -d .git ]; then

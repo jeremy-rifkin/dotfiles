@@ -74,9 +74,16 @@ echo "Downloading micromamba"
 
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj -C ~ bin/micromamba
 
-~/bin/micromamba -r ~/micromamba create -f mamba/devtools.yml -y
-
 clone_at_commit https://github.com/ohmyzsh/ohmyzsh.git ef96242b9baad6b2211c386cb9af9418ace5d876 ~/.jrenv/ohmyzsh
 clone_at_commit https://github.com/zsh-users/zsh-autosuggestions 85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5 ~/.jrenv/ohmyzsh/custom/plugins/zsh-autosuggestions
 clone_at_commit https://github.com/zsh-users/zsh-syntax-highlighting.git 5eb677bb0fa9a3e60f0eff031dc13926e093df92 ~/.jrenv/ohmyzsh/custom/plugins/zsh-syntax-highlighting
 clone_at_commit https://github.com/zsh-users/zsh-completions.git 1488badf72d9214e9e368201758c4eb08af55016 ~/.jrenv/ohmyzsh/custom/plugins/zsh-completions
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+nvm install --lts
+
+~/bin/micromamba -r ~/micromamba create -f mamba/devtools.yml -y
