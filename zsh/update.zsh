@@ -34,5 +34,5 @@ update_env() {
 if check_upstream_changes "$dotfile_repo_dir"; then
     message="Upstream changes detected for $dotfile_repo_dir
 Run update_env to update!"
-    cowpy -c stegosaurus "$message" || echo "=================================================\n$message\n================================================="
+    $HOME/.jrenv/dotfiles/utils/stegosaurus.py "$message" || echo "=================================================\n$message\n================================================="
 fi
