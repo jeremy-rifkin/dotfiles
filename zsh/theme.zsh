@@ -12,7 +12,7 @@ function get_git_branch() {
 }
 
 function get_username() {
-  [[ $EUID -eq 0 ]] && echo "%F{red}%B%n%b" || echo "%F{black}%B%n%b"
+  [[ $EUID -eq 0 ]] && echo "%F{196}%B%n%b" || echo "%F{black}%B%n%b"
 }
 
 SEPARATOR="›"
