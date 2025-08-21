@@ -22,17 +22,38 @@ check_upstream_changes() {
 }
 
 update_env() {
-    current_dir="$PWD"
-    cd $dotfile_repo_dir
     echo "Updating: Fetching and resetting"
-    git fetch --prune
-    git reset --hard origin/main
-    ./bootstrap.sh
-    cd "$current_dir"
+    git -C "$dotfile_repo_dir" fetch --prune
+    git -C "$dotfile_repo_dir" reset --hard origin/main
+    (cd "$dotfile_repo_dir" && ./bootstrap.sh) || { printf "bootstrap failed\n"; return 1; }
 }
 
-if check_upstream_changes "$dotfile_repo_dir"; then
+# Check upstream asynchronously
+# session-scoped flags (unique per shell)
+_dotfiles_flag="/tmp/.dotfiles_update_available.$$"
+_dotfiles_done="/tmp/.dotfiles_check_done.$$"
+
+# upstream check in background
+(
+  if check_upstream_changes "$dotfile_repo_dir"; then
+      : >"$_dotfiles_flag"
+  fi
+  : >"$_dotfiles_done"
+) >/dev/null 2>&1 &!
+
+autoload -Uz add-zsh-hook
+_dotfiles_notify() {
+  # if upstream check check hasn't finished yet, keep the hook for the next prompt
+  [ -f "$_dotfiles_done" ] || return
+
+  if [ -f "$_dotfiles_flag" ]; then
     message="Upstream changes detected for $dotfile_repo_dir
 Run update_env to update!"
     $HOME/.jrenv/dotfiles/utils/stegosaurus.py "$message" || echo "=================================================\n$message\n================================================="
-fi
+    rm -f -- "$_dotfiles_flag"
+  fi
+
+  rm -f -- "$_dotfiles_done"
+  add-zsh-hook -d precmd _dotfiles_notify
+}
+add-zsh-hook precmd _dotfiles_notify
