@@ -85,6 +85,8 @@ clone_at_commit https://github.com/zsh-users/zsh-autosuggestions 85919cd1ffa7d2d
 clone_at_commit https://github.com/zsh-users/zsh-syntax-highlighting.git 5eb677bb0fa9a3e60f0eff031dc13926e093df92 ~/.jrenv/ohmyzsh/custom/plugins/zsh-syntax-highlighting
 clone_at_commit https://github.com/zsh-users/zsh-completions.git 1488badf72d9214e9e368201758c4eb08af55016 ~/.jrenv/ohmyzsh/custom/plugins/zsh-completions
 
+chmod -R 755 ~/.jrenv/ohmyzsh
+
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
@@ -93,3 +95,7 @@ export NVM_DIR="$HOME/.nvm"
 nvm install --lts
 
 ~/bin/micromamba -r ~/micromamba create -f mamba/devtools.yml -y
+
+if [[ $(uname) == "Darwin" ]] ; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
