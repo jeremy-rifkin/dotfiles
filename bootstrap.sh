@@ -73,7 +73,7 @@ cp -vp scripts/* ~/bin
 echo "Downloading micromamba"
 
 if [[ $(uname) == "Darwin" ]] ; then
-  mamba_url="osx-64"
+  mamba_url="osx-arm64"
 else
   mamba_url="linux-64"
 fi
