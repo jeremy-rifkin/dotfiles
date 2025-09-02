@@ -72,7 +72,13 @@ cp -vp scripts/* ~/bin
 
 echo "Downloading micromamba"
 
-curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj -C ~ bin/micromamba
+if [[ $(uname) == "Darwin" ]] ; then
+  mamba_url="osx-64"
+else
+  mamba_url="linux-64"
+fi
+
+curl -Ls https://micro.mamba.pm/api/micromamba/${mamba_url}/latest | tar -xj -C ~ bin/micromamba
 
 clone_at_commit https://github.com/ohmyzsh/ohmyzsh.git ef96242b9baad6b2211c386cb9af9418ace5d876 ~/.jrenv/ohmyzsh
 clone_at_commit https://github.com/zsh-users/zsh-autosuggestions 85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5 ~/.jrenv/ohmyzsh/custom/plugins/zsh-autosuggestions
