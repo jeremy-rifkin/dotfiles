@@ -1,6 +1,8 @@
 JRENV=$HOME/.jrenv
 ZSH=$HOME/.jrenv/ohmyzsh
 
+export DISABLE_AUTO_UPDATE=true
+
 # ZSH_THEME="agnoster"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
