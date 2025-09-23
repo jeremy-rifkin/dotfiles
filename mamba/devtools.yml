@@ -10,3 +10,5 @@ dependencies:
   - bat
   - ninja
   - ccache
+  - jq
+  - stress-ng
