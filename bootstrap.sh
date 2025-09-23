@@ -96,6 +96,10 @@ nvm install --lts
 
 ~/bin/micromamba -r ~/micromamba create -f mamba/devtools.yml -y
 
+if [[ "$(uname)" == "Linux" ]]; then
+  micromamba install -n devtools -f mamba/devtools.linux.yml
+fi
+
 if [[ $(uname) == "Darwin" ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi

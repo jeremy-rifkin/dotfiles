@@ -1,0 +1,5 @@
+name: devtools
+channels:
+  - conda-forge
+dependencies:
+  - stress-ng

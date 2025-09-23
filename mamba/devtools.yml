@@ -11,4 +11,3 @@ dependencies:
   - ninja
   - ccache
   - jq
-  - stress-ng # [linux]
