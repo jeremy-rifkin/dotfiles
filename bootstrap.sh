@@ -52,6 +52,28 @@ clone_at_commit() {
     git -C "$target_dir" checkout FETCH_HEAD
 }
 
+check_checksum() {
+    local file="$1"
+    local expected_checksum="$2"
+
+    if [[ ! -f "$file" ]]; then
+        echo "Error: File '$file' not found." >&2
+        exit 1
+    fi
+
+    local actual_checksum
+    actual_checksum=$(sha256sum "$file" | awk '{print $1}')
+
+    if [[ "$actual_checksum" != "$expected_checksum" ]]; then
+        echo "Error: Checksum mismatch for '$file'." >&2
+        echo "Expected: $expected_checksum" >&2
+        echo "Actual:   $actual_checksum" >&2
+        exit 1
+    fi
+
+    echo "Checksum verified for '$file'."
+}
+
 for f in dots/.*; do
     [[ -e $f ]] || continue
     [[ -d $f ]] && continue
@@ -104,3 +126,12 @@ if [[ $(uname) == "Darwin" ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   brew install watch
 fi
+
+wget -O ~/bin/cloc https://raw.githubusercontent.com/AlDanial/cloc/refs/tags/v2.06/cloc
+chmod +x ~/bin/cloc
+
+wget -O ~/bin/magic-trace https://github.com/janestreet/magic-trace/releases/download/v1.2.4/magic-trace
+check_checksum ~/bin/magic-trace 4d50bc6fe84e8efd58649baa3e965457ab982be8b63922bf06995706db8fc49c
+chmod +x ~/bin/magic-trace
+
+clone_at_commit https://github.com/brendangregg/FlameGraph.git 41fee1f99f9276008b7cd112fca19dc3ea84ac32 ~/bin/FlameGraph

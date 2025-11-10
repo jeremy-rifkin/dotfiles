@@ -22,6 +22,7 @@ typeset -U path PATH
 # Prepend to path
 path[1,0]=~/micromamba/envs/devtools/bin
 path[1,0]=~/micromamba/bin
+path[1,0]=~/bin/FlameGraph
 path[1,0]=~/bin
 
 eval "$(micromamba shell hook --shell zsh)"
