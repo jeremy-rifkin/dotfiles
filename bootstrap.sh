@@ -134,4 +134,5 @@ wget -O ~/bin/magic-trace https://github.com/janestreet/magic-trace/releases/dow
 check_checksum ~/bin/magic-trace 4d50bc6fe84e8efd58649baa3e965457ab982be8b63922bf06995706db8fc49c
 chmod +x ~/bin/magic-trace
 
+rm -rf ~/bin/FlameGraph
 clone_at_commit https://github.com/brendangregg/FlameGraph.git 41fee1f99f9276008b7cd112fca19dc3ea84ac32 ~/bin/FlameGraph
