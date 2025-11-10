@@ -119,7 +119,7 @@ nvm install --lts
 ~/bin/micromamba -r ~/micromamba create -f mamba/devtools.yml -y
 
 if [[ "$(uname)" == "Linux" ]]; then
-  micromamba install -n devtools -f mamba/devtools.linux.yml
+  micromamba install -n devtools -f mamba/devtools.linux.yml -y
 fi
 
 if [[ $(uname) == "Darwin" ]] ; then
