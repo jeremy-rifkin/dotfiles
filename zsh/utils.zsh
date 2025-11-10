@@ -94,6 +94,23 @@ function checksum() {
 	echo "md5 $(md5sum $1)\nsha1 $(sha1sum $1)\nsha256 $(sha256sum $1)" | column -t -s" "
 }
 
+clone_at_commit() {
+    local repo_url=$1
+    local commit_hash=$2
+    local target_dir=$3
+
+    if [[ -z "$repo_url" || -z "$commit_hash" || -z "$target_dir" ]]; then
+        echo "Usage: clone_at_commit <repo_url> <commit_hash> <target_dir>"
+        return 1
+    fi
+
+    mkdir -p "$target_dir"
+    git init "$target_dir"
+    git -C "$target_dir" remote add origin "$repo_url"
+    git -C "$target_dir" fetch --depth 1 origin "$commit_hash"
+    git -C "$target_dir" checkout FETCH_HEAD
+}
+
 # Navigation helpers
 # up - go up n directories
 # back - pushes current dir, pops previous one
