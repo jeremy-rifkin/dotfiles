@@ -11,3 +11,4 @@ dependencies:
   - ninja
   - ccache
   - jq
+  - just
