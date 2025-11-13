@@ -54,6 +54,8 @@ alias pdsh="noglob pdsh"
 
 alias sshnokey="ssh -o PasswordAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no"
 
+[ -f "$HOME/.zshrc_local" ] && source "$HOME/.zshrc_local"
+
 # fpath=(~/thirdparty/zsh-completions/src $fpath)
 
 # ZSH=~/.zsh-aqua/
