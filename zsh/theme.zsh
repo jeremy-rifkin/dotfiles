@@ -23,6 +23,12 @@ PROMPT='%F{blue}%B%~%b%f$(get_git_branch) %F{green}%(?..%F{red})%B$SEPARATOR%b%f
 # Right prompt: [exit status] [username] [hostname]
 RPROMPT='%(?..%K{red}%F{black} %? %f%k)%K{15} $(get_username) %f%k%K{8}%F{black} %m %f%k'
 
+add_prompt_tag() {
+    local color="$1"
+    local text="$2"
+    PROMPT="%K{$color}%F{white}%B ${text} %b%f%k $PROMPT"
+}
+
 function timetohuman {
     local T=$1
     local D=$((T/60/60/24))

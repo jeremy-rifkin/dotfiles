@@ -25,7 +25,9 @@ path[1,0]=~/micromamba/bin
 path[1,0]=~/bin/FlameGraph
 path[1,0]=~/bin
 
-eval "$(micromamba shell hook --shell zsh)"
+if command -v micromamba >/dev/null 2>&1; then
+  eval "$(micromamba shell hook --shell zsh)"
+fi
 
 alias mm=micromamba
 alias mm-install="micromamba install -c conda-forge"
